@@ -1,0 +1,93 @@
+# ==========================================
+# OS & IDE Files
+# ==========================================
+.DS_Store
+._*
+.AppleDouble
+.LSOverride
+.env.local
+.env.*.local
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.project
+.classpath
+*.sublime-workspace
+
+# ==========================================
+# Sensitive Files - DO NOT COMMIT
+# ==========================================
+# Database credentials should never be in git
+admin/db-config.php
+config.php
+
+# Local environment files
+.env
+.env.local
+.env.*.local
+
+# ==========================================
+# Build & Deployment
+# ==========================================
+node_modules/
+bower_components/
+dist/
+build/
+*.log
+logs/
+
+# ==========================================
+# Temporary & Cache Files
+# ==========================================
+*.tmp
+*.temp
+*.cache
+.cache/
+vendor/
+
+# ==========================================
+# Backup Files
+# ==========================================
+*.backup
+*.bak
+*~
+*.backup.*
+
+# ==========================================
+# macOS Specific
+# ==========================================
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# ==========================================
+# Windows Specific
+# ==========================================
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# ==========================================
+# Uploads Directory (Keep structure, ignore files)
+# ==========================================
+uploads/*
+!uploads/.gitkeep
+admin/uploads/*
+!admin/uploads/.gitkeep
+
+# ==========================================
+# Database Files (Local SQLite for testing)
+# ==========================================
+*.sqlite
+*.db
+*.sqlite3
+
+# ==========================================
+# Package Manager Files (if using)
+# ==========================================
+package-lock.json
+composer.lock

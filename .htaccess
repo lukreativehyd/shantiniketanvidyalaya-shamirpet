@@ -1,0 +1,155 @@
+# High School Website - Apache Configuration
+
+# Enable mod_rewrite
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+    
+    # Remove www from URL (optional, change as needed)
+    # RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+    # RewriteRule ^(.*)$ http://%1/$1 [R=301,L]
+    
+    # Redirect HTTP to HTTPS
+    # RewriteCond %{HTTPS} !=on
+    # RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+    
+    # ==========================================
+    # SEO-FRIENDLY BLOG URLS
+    # ==========================================
+    # Rewrite /blog/slug-name/ to /blog.php?slug=slug-name
+    RewriteRule ^blog/([a-zA-Z0-9\-]+)/?$ blog.php?slug=$1 [L,QSA]
+    
+    # ==========================================
+    # REMOVE .PHP EXTENSIONS FROM URLs
+    # ==========================================
+    
+    # Don't process requests for existing directories
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+    
+    # Don't process requests for existing files
+    RewriteCond %{REQUEST_FILENAME} -f
+    RewriteRule ^ - [L]
+    
+    # Rewrite URLs without .php extension for root pages
+    # This allows: /page instead of /page.php
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^([a-zA-Z0-9/_-]+)/?$ $1.php [QSA,L]
+    
+    # Rewrite /admin/page to /admin/page.php
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^admin/([a-zA-Z0-9/_-]+)/?$ admin/$1.php [QSA,L]
+    
+    # ==========================================
+    # BLOCK SQL INJECTION ATTEMPTS (SECURITY)
+    # ==========================================
+    # Only block on query strings, not POST requests
+    
+    RewriteCond %{REQUEST_METHOD} GET
+    RewriteCond %{QUERY_STRING} (<|>|'|%0A|%0D|%08|%09) [NC]
+    RewriteRule .* - [F]
+    
+    RewriteCond %{REQUEST_METHOD} GET
+    RewriteCond %{QUERY_STRING} UNION.*SELECT [NC]
+    RewriteRule .* - [F]
+    
+    RewriteCond %{REQUEST_METHOD} GET
+    RewriteCond %{QUERY_STRING} INSERT.*INTO [NC]
+    RewriteRule .* - [F]
+    
+    RewriteCond %{REQUEST_METHOD} GET
+    RewriteCond %{QUERY_STRING} DELETE.*FROM [NC]
+    RewriteRule .* - [F]
+    
+    RewriteCond %{REQUEST_METHOD} GET
+    RewriteCond %{QUERY_STRING} DROP [NC]
+    RewriteRule .* - [F]
+</IfModule>
+
+# Set proper MIME types
+<IfModule mod_mime.c>
+    AddType application/javascript js
+    AddType text/css css
+    AddType image/svg+xml svg svgz
+    AddEncoding gzip svgz
+</IfModule>
+
+# Enable GZIP compression
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json
+</IfModule>
+
+# Browser caching
+<IfModule mod_expires.c>
+    ExpiresActive On
+    
+    # Images
+    ExpiresByType image/jpeg "access 1 year"
+    ExpiresByType image/gif "access 1 year"
+    ExpiresByType image/png "access 1 year"
+    ExpiresByType image/webp "access 1 year"
+    ExpiresByType image/svg+xml "access 1 year"
+    
+    # CSS & JavaScript
+    ExpiresByType text/css "access 1 month"
+    ExpiresByType application/javascript "access 1 month"
+    ExpiresByType text/javascript "access 1 month"
+    
+    # Fonts
+    ExpiresByType font/ttf "access 1 year"
+    ExpiresByType font/otf "access 1 year"
+    ExpiresByType font/woff "access 1 year"
+    ExpiresByType font/woff2 "access 1 year"
+    
+    # Default
+    ExpiresDefault "access 2 days"
+</IfModule>
+
+# Security headers (customize as needed)
+<IfModule mod_headers.c>
+    # Prevent clickjacking
+    Header always append X-Frame-Options "SAMEORIGIN"
+    
+    # Enable XSS protection
+    Header always append X-XSS-Protection "1; mode=block"
+    
+    # Prevent MIME type sniffing
+    Header always append X-Content-Type-Options "nosniff"
+    
+    # Referrer policy
+    Header always append Referrer-Policy "strict-origin-when-cross-origin"
+    
+    # Content Security Policy (customize as needed)
+    # Header set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; img-src 'self' data: https:; font-src 'self' https://fonts.gstatic.com;"
+</IfModule>
+
+# Disable directory listing
+<IfModule mod_autoindex.c>
+    Options -Indexes
+</IfModule>
+
+# Protect sensitive files (but not process-enquiry.php - it needs to be accessible)
+<FilesMatch "(\.env|\.git|config\.php)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Allow specific file types
+<IfModule mod_authz_core.c>
+    <LocationMatch "^/(assets|images)/">
+        Require all granted
+    </LocationMatch>
+</IfModule>
+
+# PHP configuration (if needed)
+<IfModule mod_php.c>
+    php_value upload_max_filesize 20M
+    php_value post_max_size 20M
+    php_value max_execution_time 300
+    php_value max_input_time 300
+</IfModule>

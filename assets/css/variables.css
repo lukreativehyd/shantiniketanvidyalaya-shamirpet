@@ -1,0 +1,104 @@
+/* 
+Universal CSS Variables - High School Website
+Easy to customize: Change colors, fonts, spacing as needed
+*/
+
+:root {
+    /* Primary Colors */
+    --primary-color: #295192;
+    --primary-light: #3D66B4;
+    --primary-lighter: #5A7FB8;
+    --primary-dark: #1F3B6B;
+    
+    /* Secondary Colors */
+    --accent-color: #BF3149;
+    --accent-light: #D64364;
+    --success-color: #4CAF50;
+    --warning-color: #FFC107;
+    
+    /* Neutral Colors */
+    --text-primary: #333333;
+    --text-secondary: rgb(70, 70, 70);
+    --text-light: #999999;
+    --border-color: #E0E0E0;
+    --background-light: #F5F5F5;
+    --background-lighter: #FAFAFA;
+    --white: #FFFFFF;
+    
+    /* Typography */
+    --font-family-main: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-family-heading: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    
+    --font-size-h1: 4rem;
+    --font-size-h2: 3.2rem;
+    --font-size-h3: 2.3rem;
+    --font-size-h4: 1.75rem;
+    --font-size-h5: 1.4rem;
+    --font-size-h6: 1.1rem;
+    --font-size-body: 1rem;
+    --font-size-small: 0.875rem;
+    --font-size-xs: 0.75rem;
+    
+    --line-height-body: 1.4;
+    --line-height-heading: 1.2;
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 700;
+    --font-weight-bold: 800;
+    
+    /* Spacing */
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 0.75rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+    --spacing-xxl: 3rem;
+    --spacing-xxxl: 4rem;
+    
+    /* Border Radius */
+    --border-radius-sm: 4px;
+    --border-radius-md: 6px;
+    --border-radius-lg: 8px;
+    --border-radius-xl: 12px;
+    --border-radius-full: 9999px;
+    
+    /* Shadows */
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.12);
+    --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.15);
+    --shadow-xl: 0 12px 24px rgba(0, 0, 0, 0.18);
+    
+    /* Transitions */
+    --transition-fast: 200ms ease-in-out;
+    --transition-normal: 300ms ease-in-out;
+    --transition-slow: 500ms ease-in-out;
+    
+    /* Container & Layout */
+    --container-max-width: 1200px;
+    --container-padding: 2rem;
+    --grid-gap: 2rem;
+}
+
+/* Responsive adjustments for tablet */
+@media (max-width: 768px) {
+    :root {
+        --font-size-h1: 2.5rem;
+        --font-size-h2: 2rem;
+        --font-size-h3: 1.5rem;
+        --font-size-h4: 1.25rem;
+        --container-padding: 1.5rem;
+    }
+}
+
+/* Responsive adjustments for mobile */
+@media (max-width: 480px) {
+    :root {
+        --font-size-h1: 2rem;
+        --font-size-h2: 1.5rem;
+        --font-size-h3: 1.25rem;
+        --font-size-h4: 1rem;
+        --container-padding: 1rem;
+        --spacing-xl: 2rem;
+        --spacing-xxl: 3rem;
+    }
+}
